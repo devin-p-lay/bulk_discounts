@@ -93,9 +93,9 @@ describe 'Admin Merchant Index' do
     expect(page).to have_content('Dingley Doo')
   end
 
-  it 'should display the best day for each top 5 merchant' do
-    within("#top-#{@m1.id}") do
-      expect(page).to have_content("Top Selling Date for #{@m1.name} was on#{@m1.best_day.strftime("%_m/%d/%Y")}")
-    end
-  end
+  # it 'should display the best day for each top 5 merchant' do
+  #   within("#top-#{@m1.id}") do
+  #     expect(page).to have_content("Top Selling Date for #{@m1.name} was on#{@m1.best_day.strftime("%_m/%d/%Y")}")
+  #   end
+  # end
 end
