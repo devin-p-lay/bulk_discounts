@@ -1,8 +1,10 @@
-<h1>Discounts</h1>
+<h1>BULK Discounts</h1>
+<p><%= link_to 'Create a New Discount', new_merchant_discount_path(@merchant), method: :get %></p>
+
 <% @discounts.each do |discount| %>
+
   <section id="discount-<%= discount.id %>">
     <h5><%= link_to discount.name, merchant_discount_path(@merchant, discount) %></h5>
     <p>Get <%= discount.percentage_discount %>% off every <%= discount.quantity_threshold %></p>
   </section>
 <% end %>
-<p><%= link_to 'Create a New Discount', new_merchant_discount_path(@merchant), method: :get %></p>
