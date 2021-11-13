@@ -18,6 +18,15 @@ RSpec.describe "New Discount Page" do
         expect(page).to have_content(25)
         expect(page).to have_content(200)
       end
+
+      it "if filled out incorrectly, i see a message and am redirected" do
+        fill_in :name, with: '30% OFF'
+        fill_in :percentage_discount, with: 30
+        fill_in :quantity_threshold, with: ''
+        click_on 'Submit'
+        expect(current_path).to eq(new_merchant_discount_path(@merchant))
+        expect(page).to have_content('Unable to submit form: Missing Information')
+      end
     end
   end
 end
