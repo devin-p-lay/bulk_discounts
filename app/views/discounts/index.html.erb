@@ -5,3 +5,4 @@
     <p>Get <%= discount.percentage_discount %>% off every <%= discount.quantity_threshold %></p>
   </section>
 <% end %>
+<p><%= link_to 'Create a New Discount', new_merchant_discount_path(@merchant), method: :get %></p>
