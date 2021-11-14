@@ -1,4 +1,4 @@
-@merchant = Merchant.create!(name: "Witch's Coven")
+@merchant = Merchant.create!(name: "Home Goods")
 @discount1 = Discount.create!(name: "5% OFF", percentage_discount: 5, quantity_threshold: 10, merchant_id: @merchant.id)
 @discount2 = Discount.create!(name: "10% OFF", percentage_discount: 10, quantity_threshold: 25, merchant_id: @merchant.id)
 @discount3 = Discount.create!(name: "15% OFF", percentage_discount: 15, quantity_threshold: 50, merchant_id: @merchant.id)
