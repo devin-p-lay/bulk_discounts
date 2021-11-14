@@ -28,5 +28,16 @@ RSpec.describe "Discounts Index Page" do
       click_link 'Create a New Discount'
       expect(current_path).to eq(new_merchant_discount_path(@merchant))
     end
+
+    describe "next to each discount, i see a link to delete it" do
+      it "when clicked, i'm redirected to index and i no longer see the discount" do
+        within "#discount-#{@discount1.id}" do
+          click_link 'Delete discount'
+        end
+        expect(current_path).to eq(merchant_discounts_path(@merchant))
+        save_and_open_page
+        expect(page).to_not have_content(@discount1)
+      end
+    end
   end
 end
