@@ -35,7 +35,6 @@ RSpec.describe "Discounts Index Page" do
           click_link 'Delete discount'
         end
         expect(current_path).to eq(merchant_discounts_path(@merchant))
-        save_and_open_page
         expect(page).to_not have_content(@discount1)
       end
     end
