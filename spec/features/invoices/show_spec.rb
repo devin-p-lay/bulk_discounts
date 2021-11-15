@@ -100,4 +100,10 @@ RSpec.describe 'invoices show' do
      end
   end
 
+  describe "Revenue by Merchant" do
+    it "i see the total revenue for merchant from this invoice" do
+      save_and_open_page
+      expect(page).to have_content("Merchant total revenue: #{@invoice_1.merchant_revenue}")
+    end
+  end
 end

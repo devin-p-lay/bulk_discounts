@@ -19,6 +19,14 @@ RSpec.describe "Discount Edit Page" do
         expect(page).to have_content(5)
         expect(page).to have_content(10)
       end
+
+      it "if i fill out the form incorrectly, i'm redirected back to edit page" do
+        fill_in :name, with: ''
+        fill_in :percentage_discount, with: 5
+        fill_in :quantity_threshold, with: 10
+        click_on 'Submit'
+        expect(current_path).to eq(edit_merchant_discount_path(@merchant, @discount))
+      end
     end
   end
 end
