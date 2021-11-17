@@ -54,4 +54,9 @@ class Merchant < ApplicationRecord
             .order("revenue desc", "invoices.created_at desc")
             .first&.created_at&.to_date
   end
+
+#   def total_revenue
+# wip = invoice_items.total_revenue
+# require "pry"; binding.pry
+#   end
 end

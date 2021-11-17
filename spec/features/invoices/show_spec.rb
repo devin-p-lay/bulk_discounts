@@ -21,6 +21,7 @@ RSpec.describe 'invoices show' do
     @customer_4 = Customer.create!(first_name: 'Leigh Ann', last_name: 'Bron')
     @customer_5 = Customer.create!(first_name: 'Sylvester', last_name: 'Nader')
     @customer_6 = Customer.create!(first_name: 'Herber', last_name: 'Kuhn')
+    @customer_7 = Customer.create!(first_name: 'Danger', last_name: 'Legend')
 
     @invoice_1 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
     @invoice_2 = Invoice.create!(customer_id: @customer_1.id, status: 2, created_at: "2012-03-28 14:54:09")
@@ -31,6 +32,8 @@ RSpec.describe 'invoices show' do
     @invoice_7 = Invoice.create!(customer_id: @customer_6.id, status: 2)
 
     @invoice_8 = Invoice.create!(customer_id: @customer_6.id, status: 1)
+    @invoice_9 = Invoice.create!(customer_id: @customer_7.id, status: 2)
+    @invoice_10 = Invoice.create!(customer_id: @customer_7.id, status: 2)
 
     @ii_1 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_1.id, quantity: 9, unit_price: 10, status: 2)
     @ii_2 = InvoiceItem.create!(invoice_id: @invoice_2.id, item_id: @item_1.id, quantity: 1, unit_price: 10, status: 2)
@@ -40,8 +43,10 @@ RSpec.describe 'invoices show' do
     @ii_7 = InvoiceItem.create!(invoice_id: @invoice_6.id, item_id: @item_7.id, quantity: 1, unit_price: 3, status: 1)
     @ii_8 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_8.id, quantity: 1, unit_price: 5, status: 1)
     @ii_9 = InvoiceItem.create!(invoice_id: @invoice_7.id, item_id: @item_4.id, quantity: 1, unit_price: 1, status: 1)
-    @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 1, status: 1)
+    @ii_10 = InvoiceItem.create!(invoice_id: @invoice_8.id, item_id: @item_5.id, quantity: 1, unit_price: 200, status: 1)
     @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 12, unit_price: 6, status: 1)
+    @ii_12 = InvoiceItem.create!(invoice_id: @invoice_9.id, item_id: @item_6.id, quantity: 2, unit_price: 300, status: 2)
+    @ii_12 = InvoiceItem.create!(invoice_id: @invoice_10.id, item_id: @item_5.id, quantity: 1, unit_price: 200, status: 2)
 
     @transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_1.id)
     @transaction2 = Transaction.create!(credit_card_number: 230948, result: 1, invoice_id: @invoice_2.id)
@@ -51,6 +56,8 @@ RSpec.describe 'invoices show' do
     @transaction6 = Transaction.create!(credit_card_number: 879799, result: 0, invoice_id: @invoice_6.id)
     @transaction7 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_7.id)
     @transaction8 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: @invoice_8.id)
+    @transaction9 = Transaction.create!(credit_card_number: 201232, result: 1, invoice_id: @invoice_9.id)
+    @transaction10 = Transaction.create!(credit_card_number: 201232, result: 1, invoice_id: @invoice_10.id)
   end
 
   it "shows the invoice information" do
@@ -102,8 +109,8 @@ RSpec.describe 'invoices show' do
 
   describe "Revenue by Merchant" do
     it "i see the total revenue for merchant from this invoice" do
-      save_and_open_page
-      expect(page).to have_content("Merchant total revenue: #{@invoice_1.merchant_revenue}")
+      visit merchant_invoice_path(@merchant2, @invoice_10)
+      expect(page).to have_content("Merchant total revenue: #{@invoice_10.merchant_revenue}")
     end
   end
 end
