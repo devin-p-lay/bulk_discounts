@@ -19,5 +19,10 @@ describe 'discounts index' do
       expect(page).to have_content(@discount3.name)
       expect(page).to_not have_content(@other_discount.name)
     end
+
+    it 'link to create a new discount' do
+      click_link 'Create new discount'
+      expect(current_path).to eq(new_merchant_discount_path(@merchant))
+    end 
   end
 end
