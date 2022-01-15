@@ -1,12 +1,12 @@
 <%= form_with model: model, method: method, url: url, class: 'merchant_discount_form', local: true do |f| %>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
+  <%= f.label :name, 'Name' %>
+  <%= f.text_field :name, value: @discount.name %>
 
-  <%= f.label :percentage_discount %>
-  <%= f.text_field :percentage_discount %>
+  <%= f.label :percentage_discount, 'Discount Percentage' %>
+  <%= f.text_field :percentage_discount, value: @discount.percentage_discount %>
 
-  <%= f.label :quantity_threshold %>
-  <%= f.text_field :quantity_threshold %>
+  <%= f.label :quantity_threshold, 'Quantity Threshold' %>
+  <%= f.text_field :quantity_threshold, value: @discount.quantity_threshold %>
 
   <%= f.submit 'Submit' %>
 <% end %>

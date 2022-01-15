@@ -11,5 +11,10 @@ describe 'merchant discount show' do
     it 'info' do
       expect(page).to have_content("you will save 10% on each of those items when you reach 10 of that same item")
     end
+
+    it 'link to edit discount' do
+      click_link 'Edit discount'
+      expect(current_path).to eq(edit_merchant_discount_path(@merchant, @discount))
+    end
   end
 end

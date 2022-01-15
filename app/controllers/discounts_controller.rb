@@ -1,5 +1,6 @@
 class DiscountsController < ApplicationController
-  before_action :do_merchant, only: [:index, :create, :destroy]
+  before_action :do_merchant
+  
   def index
     @discounts = @merchant.discounts
   end
@@ -8,7 +9,12 @@ class DiscountsController < ApplicationController
     @discount = Discount.find(params[:id])
   end
 
+  def edit
+    @discount = Discount.find(params[:id])
+  end
+
   def new
+    @discount = Discount.new
   end
 
   def create
@@ -18,6 +24,15 @@ class DiscountsController < ApplicationController
     else
       flash[:alert] = 'Unable to submit form: Missing Information'
       redirect_to new_merchant_discount_path(@merchant)
+    end
+  end
+
+  def update
+    discount = Discount.find(params[:id])
+    if discount.update(discount_params)
+      redirect_to merchant_discount_path(@merchant, discount)
+    else
+      redirect_to edit_merchant_discount_path(@merchant, discount)
     end
   end
 
