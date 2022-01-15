@@ -85,6 +85,28 @@ RSpec.describe 'invoices show' do
     expect(page).to have_content(@invoice_1.total_revenue)
   end
 
+  it "shows the revenue for this invoice with discounts applied" do
+    customer = Customer.create(first_name: "My", last_name: "Customer")
+    invoice = customer.invoices.create(status: 1)
+
+    merchant_a = Merchant.create(name: "Devin's")
+    item_a1 = Item.create(name: "item 1", description: 'description', unit_price: 10, merchant_id: merchant_a.id)
+    item_a2 = Item.create(name: "item 2", description: 'description', unit_price: 10, merchant_id: merchant_a.id)
+    invoice_item1 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_a1.id, quantity: 12, unit_price: 100, status: 1 )
+    invoice_item2 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_a2.id, quantity: 15, unit_price: 100, status: 1 )
+    discount_a1 = merchant_a.discounts.create(name: 'Discount A', percentage_discount: 10, quantity_threshold: 10)
+    discount_a2 = merchant_a.discounts.create(name: 'Discount B', percentage_discount: 15, quantity_threshold: 15)
+
+    merchant_b = Merchant.create(name: "Beckett's")
+    item_b = Item.create(name: "item 3", description: 'description', unit_price: 10, merchant_id: merchant_b.id)
+    invoice_item3 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item_b.id, quantity: 20, unit_price: 100, status: 1 )
+
+    visit merchant_invoice_path(merchant_a, invoice)
+
+    expect(invoice.total_revenue).to eq(4700.0)
+    expect(page).to have_content("Merchant Discounted Revenue: $23.55")
+  end
+
   it "shows a select field to update the invoice status" do
     visit merchant_invoice_path(@merchant1, @invoice_1)
 
@@ -99,5 +121,4 @@ RSpec.describe 'invoices show' do
        expect(page).to_not have_content("in progress")
      end
   end
-
 end
