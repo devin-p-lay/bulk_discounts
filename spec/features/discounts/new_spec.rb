@@ -14,6 +14,8 @@ describe 'new merchant discount' do
     expect(current_path).to eq(merchant_discounts_path(@merchant))
     expect(page).to have_content('25 at 25')
     expect(page).to have_content('Get 25% off when you reach 25 items')
-    save_and_open_page
   end
+
+  it 'can handle form filled out incorrectly' do
+  end 
 end
