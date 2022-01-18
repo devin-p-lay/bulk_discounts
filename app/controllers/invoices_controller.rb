@@ -8,7 +8,10 @@ class InvoicesController < ApplicationController
 
   def show
     @customer = @invoice.customer
-    @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first
+    #check later to see if i need this line below
+    # @invoice_item = InvoiceItem.where(invoice_id: params[:id]).first
+    @merchant_invoice_items = @invoice.invoice_items_by_merchant(@merchant)
+    @invoice_items = @invoice.invoice_items
   end
 
   def update

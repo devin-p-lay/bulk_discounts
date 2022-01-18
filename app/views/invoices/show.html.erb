@@ -21,6 +21,7 @@
 
   <p> Created on: <%= @invoice.created_at.strftime("%A, %B %-d, %Y") %></p>
   <p>Total Revenue: <%= @invoice.total_revenue %></p>
+  <p>Merchant Discounted Revenue: <%= number_to_currency(@merchant_invoice_items.discount_revenue) %></p>
 
 
   <h4>Customer:</h4>
@@ -31,20 +32,26 @@
   <table class="table">
     <thead>
       <tr class="tr">
-        <th class="th1">Item Name</th>
-        <th class="th1">Quantity</th>
-        <th class="th1">Unit Price</th>
-        <th class="th1">Status</th>
+        <th scope="col">Item Name</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Applicable Discount</th>
+        <th scope="col">Unit Price</th>
+        <th scope="col">Status</th>
       </tr>
     </thead>
 
     <tbody>
-      <% @invoice.invoice_items.each do |i| %>
+      <% @invoice_items.each do |i| %>
         <section id="the-status-<%= i.id %>">
           <tr class="tr">
             <td style="text-align:center"><%= i.item.name %></td>
             <td style="text-align:center"><%= i.quantity %></td>
-            <td style="text-align:center">$<%= i.unit_price %></td>
+            <% if i.best_deal.nil? %>
+              <td style="text-align:center">No discount applied</td>
+            <% else %>
+              <td style="text-align:center"><%= link_to "#{i.best_deal.name}", merchant_discount_path(@merchant, i.best_deal.id) %></td>
+            <% end %>
+            <td style="text-align:center"><%= i.unit_price %></td>
             <td style="text-align:center"><%= form_with model: @invoice, url: merchant_invoice_path(@merchant, @invoice), method: :patch, local: true do |f| %>
                                             <%= f.select :status, Invoice.statuses.keys, selected: "#{@invoice.status}" %>
                                             <%= f.submit 'Update Invoice' %>
