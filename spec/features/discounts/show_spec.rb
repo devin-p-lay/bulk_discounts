@@ -9,7 +9,7 @@ describe 'merchant discount show' do
 
   describe 'display' do
     it 'info' do
-      expect(page).to have_content("you will save 10% on each of those items when you reach 10 of that same item")
+      expect(page).to have_content("you will save 10% off the collection of items - when you reach 10 of that same item")
     end
 
     it 'link to edit discount' do

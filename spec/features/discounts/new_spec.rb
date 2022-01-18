@@ -17,5 +17,11 @@ describe 'new merchant discount' do
   end
 
   it 'can handle form filled out incorrectly' do
-  end 
+    fill_in :name, with: nil
+    fill_in :percentage_discount, with: nil
+    fill_in :quantity_threshold, with: nil
+    click_on 'Submit'
+    expect(current_path).to eq(new_merchant_discount_path(@merchant))
+    expect(page).to have_content("Unable to Create Discount")
+  end
 end

@@ -1,6 +1,6 @@
 class DiscountsController < ApplicationController
   before_action :do_merchant
-  
+
   def index
     @discounts = @merchant.discounts
   end
@@ -22,18 +22,16 @@ class DiscountsController < ApplicationController
     if discount.save
       redirect_to merchant_discounts_path(@merchant)
     else
-      flash[:alert] = 'Unable to submit form: Missing Information'
+      flash[:alert] = 'Unable to Create Discount'
       redirect_to new_merchant_discount_path(@merchant)
     end
   end
 
   def update
     discount = Discount.find(params[:id])
-    if discount.update(discount_params)
-      redirect_to merchant_discount_path(@merchant, discount)
-    else
-      redirect_to edit_merchant_discount_path(@merchant, discount)
-    end
+    discount.update(discount_params)
+    redirect_to merchant_discount_path(@merchant, discount)
+
   end
 
   def destroy
